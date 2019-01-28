@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using NobelPriceData.Models;
 using GraphQL.Types;
+using NobelPriceAPI.Repositories;
 
 
 namespace NobelPriceAPI.Models
 {
     public class NobelWinnersType : ObjectGraphType<NobelWinners>
     {
-        public NobelWinnersType()
+        public NobelWinnersType(INobelRepository nobelRepository)
         {
             Field<IntGraphType>("Id", resolve: context => context.Source.Id);
             Field(x => x.Firstname);
@@ -24,7 +25,9 @@ namespace NobelPriceAPI.Models
             Field(x => x.DiedCountry);
             Field(x => x.DiedCountryCode);
             Field(x => x.Gender);
-            Field<NobelPrizesType>("IdNavigation", resolve: context => context.Source.IdNavigation);
+            Field<ListGraphType<NobelPrizesType>>("NobelPrizes",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "Id" }),
+                resolve: context => nobelRepository.GetPricesById(context.Source.Id));
         }
     }
 }

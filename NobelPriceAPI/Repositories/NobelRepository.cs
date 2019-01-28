@@ -21,8 +21,36 @@ namespace NobelPriceAPI.Repositories
             return await _db.NobelWinners.ToListAsync();
         }
 
+        public async Task<List<NobelWinners>> GetWinnersById(int id)
+        {
+            return await _db.NobelWinners.Where(x => x.Id == id).ToListAsync();
+        }
+
+        public async Task<List<NobelWinners>> GetWinnersByName(string name = null)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                return await _db.NobelWinners.Where(x => x.Surname == name).ToListAsync();
+            }
+            return await _db.NobelWinners.ToListAsync();
+        }
+
         public async Task<List<NobelPrizes>> GetAllPrices()
         {
+            return await _db.NobelPrizes.ToListAsync();
+        }
+
+        public async Task<List<NobelPrizes>> GetPricesById(int id)
+        {
+            return await _db.NobelPrizes.Where(x => x.Id == id).ToListAsync();
+        }
+
+        public async Task<List<NobelPrizes>> GetPricesByYear(string year = null)
+        {
+            if (!string.IsNullOrEmpty(year))
+            {
+                return await _db.NobelPrizes.Where(x => x.Year.ToString() == year).ToListAsync();
+            }
             return await _db.NobelPrizes.ToListAsync();
         }
     }

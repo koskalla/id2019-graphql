@@ -9,7 +9,12 @@ namespace NobelPriceAPI.Repositories
     public interface INobelRepository
     {
         Task<List<NobelWinners>> GetAllWinners();
+        Task<List<NobelWinners>> GetWinnersById(int id);
+        Task<List<NobelWinners>> GetWinnersByName(string name);
 
         Task<List<NobelPrizes>> GetAllPrices();
+        Task<List<NobelPrizes>> GetPricesById(int id);
+        Task<List<NobelPrizes>> GetPricesByYear(string year);
+
     }
 }
