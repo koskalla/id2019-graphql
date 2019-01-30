@@ -23,7 +23,7 @@ namespace NobelPriceAPI.Models
             Field<ListGraphType<NobelWinnersType>>(
                "NobelWinners",
                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "Name" }),
-               resolve: context => nobelRepository.GetWinnersByName(context.GetArgument<string>("name")));
+               resolve: context => nobelRepository.GetWinners(context.GetArgument<string>("name")));
 
             //Field<ListGraphType<NobelPrizesType>>(
             //   "NobelPrices",
@@ -36,8 +36,8 @@ namespace NobelPriceAPI.Models
 
             Field<ListGraphType<NobelPrizesType>>(
                "NobelPrices",
-               arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "Year" }),
-               resolve: context => nobelRepository.GetPricesByYear(context.GetArgument<string>("year")));
+               arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "Category" }, new QueryArgument<StringGraphType> { Name = "Year" }),
+               resolve: context => nobelRepository.GetPrices(context.GetArgument<string>("category"), context.GetArgument<string>("year")));
         }
     }
 }

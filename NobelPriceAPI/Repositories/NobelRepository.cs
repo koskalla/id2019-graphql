@@ -16,17 +16,17 @@ namespace NobelPriceAPI.Repositories
             _db = db;
         }
 
-        public async Task<List<NobelWinners>> GetAllWinners()
-        {
-            return await _db.NobelWinners.ToListAsync();
-        }
+        //public async Task<List<NobelWinners>> GetAllWinners()
+        //{
+        //    return await _db.NobelWinners.ToListAsync();
+        //}
 
         public async Task<List<NobelWinners>> GetWinnersById(int id)
         {
             return await _db.NobelWinners.Where(x => x.Id == id).ToListAsync();
         }
 
-        public async Task<List<NobelWinners>> GetWinnersByName(string name = null)
+        public async Task<List<NobelWinners>> GetWinners(string name = null)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -35,21 +35,29 @@ namespace NobelPriceAPI.Repositories
             return await _db.NobelWinners.ToListAsync();
         }
 
-        public async Task<List<NobelPrizes>> GetAllPrices()
-        {
-            return await _db.NobelPrizes.ToListAsync();
-        }
+        //public async Task<List<NobelPrizes>> GetAllPrices()
+        //{
+        //    return await _db.NobelPrizes.ToListAsync();
+        //}
 
         public async Task<List<NobelPrizes>> GetPricesById(int id)
         {
             return await _db.NobelPrizes.Where(x => x.Id == id).ToListAsync();
         }
 
-        public async Task<List<NobelPrizes>> GetPricesByYear(string year = null)
+        public async Task<List<NobelPrizes>> GetPrices(string category = null, string year = null)
         {
+            if (!string.IsNullOrEmpty(year) && !string.IsNullOrEmpty(category))
+            {
+                return await _db.NobelPrizes.Where(x => x.Year.ToString() == year && x.Category == category).ToListAsync();
+            }
             if (!string.IsNullOrEmpty(year))
             {
                 return await _db.NobelPrizes.Where(x => x.Year.ToString() == year).ToListAsync();
+            }
+            if (!string.IsNullOrEmpty(category))
+            {
+                return await _db.NobelPrizes.Where(x => x.Category == category).ToListAsync();
             }
             return await _db.NobelPrizes.ToListAsync();
         }

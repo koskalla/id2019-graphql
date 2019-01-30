@@ -1,0 +1,28 @@
+
+http://id2019-graphql.azurewebsites.net/graphql
+
+{nobelPrices(year: "1984")
+  {category,
+  nobelWinners{firstname}}
+}
+
+{nobelPrices(year: "1984", category: "physics")
+  {category,
+  nobelWinners{firstname}}
+}
+
+{nobelPrices(year: "1984", category: "physics")
+  { 
+    category,
+    year,
+    nobelWinners {firstname,surname,bornCountry}
+  }
+}
+
+
+
+
+http://id2019-restapi.azurewebsites.net/api/nobelprices/
+http://id2019-restapi.azurewebsites.net/api/nobelprices/1903
+
+http://id2019-restapi.azurewebsites.net/api/nobelwinners
